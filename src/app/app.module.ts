@@ -9,6 +9,7 @@ import { VideoListComponent } from './video-list/video-list.component';
 import { VideoDetailComponent } from './video-detail/video-detail.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     VideoCenterComponent,
     VideoListComponent,
     VideoDetailComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

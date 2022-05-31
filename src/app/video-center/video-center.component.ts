@@ -10,8 +10,8 @@ import { VideoService } from '../video.service';
 export class VideoCenterComponent implements OnInit {
 
   constructor(private _videoService:VideoService) { }
-  selectedVideo!:Video;
-
+  selectedVideo!:any;
+  public hidenewVideo: boolean = true;
   videos:Video[] = []
 
   ngOnInit(): void {
@@ -22,10 +22,43 @@ export class VideoCenterComponent implements OnInit {
           }
         })
   }
+  onSubmitAddVideo(video:Video){
+    this._videoService.addVideo(video)
+          .subscribe(resNewVideo => {
+            this.videos.push(resNewVideo)
+            this.hidenewVideo = true
+            this.selectedVideo = resNewVideo
+          })
+  }
 
   onSelectVideo(video:Video){
     this.selectedVideo = video
+    this.hidenewVideo = true
     console.log(this.selectedVideo)
+  }
+
+  newVideo(){
+    this.hidenewVideo = false;
+  }
+
+  onUpdateVideoEvent(video:Video){
+    this._videoService.updateVideo(video)
+        .subscribe(resUpdatedVideo => {})
+        this.selectedVideo = null
+  }
+
+  onDeleteVideoEvent(video:Video){
+    let videoArray = this.videos
+
+    this._videoService.deleteVideo(video)
+        .subscribe(resDeletedVideo => {
+          for (let i = 0; i < videoArray.length; i++) {
+            if(videoArray[i]._id === video._id){
+              videoArray.splice(i,1)
+            }
+          }
+        });
+        this.selectedVideo = null
   }
 
 }
